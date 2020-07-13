@@ -25,7 +25,15 @@ a: hover {
 text-decoration: none; color: #FFF;
 }
 
+h2{
+color: #fff;
+}
+
 h3 {
+color: #fff;
+}
+
+label {
 color: #fff;
 }
 
