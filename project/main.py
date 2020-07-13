@@ -15,9 +15,6 @@ app.config.update(
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-posts = ["One", "Two", "Three"]  # Temp
-
 logger = getLogger(__name__)
 
 
@@ -131,4 +128,4 @@ def new_post():
 
 
 if __name__ == '__main__':
-    app.run(debug=1)
+    app.run()

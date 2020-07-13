@@ -1,2 +1,5 @@
+.idea
 venv
 Web_Blog.iml
+project/.idea
+project/myapp.db
