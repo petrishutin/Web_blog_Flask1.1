@@ -1,3 +1,4 @@
+import os
 from logging import getLogger
 
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -6,12 +7,10 @@ from werkzeug.exceptions import BadRequest, InternalServerError
 
 from models import User, Post
 from models.db import Session
+from config import API_KEY
 
 app = Flask(__name__)
-app.config.update(
-    DEBUG=True,
-    SECRET_KEY='bste24D%$^xs#$%23X^zxdfzffg,;o(*4643FD%%!(XERre436otoo',
-)
+app.config['API_KEY'] = API_KEY
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -42,7 +41,7 @@ def get_username_and_password_from_form(form: dict):
 
 
 def validate_username_unique(username):
-    if Session.query(User).filter_by(username=username).count():
+    if Session.query(User).filter_by(username=username).one_or_none():
         raise BadRequest(f"User with username {username!r} already exists!")
 
 
@@ -129,3 +128,4 @@ def new_post():
 
 if __name__ == '__main__':
     app.run()
+

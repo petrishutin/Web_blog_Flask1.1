@@ -1,9 +1,24 @@
 {% extends "base.html" %}
 
 {% block content  %}
+<header class="container-fluid">
+    <div class="navbar-nav bd-navbar-nav flex-row row align-items-center">
+        <a href="index.html"><h1 class="col">My Blog</h1></a>
+        <div class="col-4" align="left">{%if username%} You are logged as {{username}} {%endif%}</div>
+        <ul class="col-6 row justify-content-end">
+            {% if is_authed%}
+            <li class="btn btn-secondary border"><a href="new_post.html">New Post</a></li>
+            <li class="btn btn-secondary border"><a href="logout/">Log Out</a></li>
+            {% else %}
+            <li class="btn btn-secondary border"><a href="login.html">Log In</a></li>
+            <li class="btn btn-secondary border"><a href="sign_in.html">Sign In</a></li>
+            {% endif%}
+        </ul>
+    </div>
+</header>
 {% for post in posts%}
 <div class="row justify-content-center">
-    <div class="border border-secondary col-xs-6 col-md-8 ">{{post}}</div>
+    <article class="border border-secondary col-xs-6 col-md-8 ">{{post}}</article>
 </div>
 {%endfor%}
 {% endblock %}

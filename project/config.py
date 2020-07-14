@@ -1,3 +1,4 @@
+API_KEY='dfasfj9wer@45635sdG#!#TAY&()@$VCb3563rsdgfsa#$%34'
 
 # Postgres settings
 # POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
