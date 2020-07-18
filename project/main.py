@@ -94,9 +94,7 @@ def logout():
 @app.route('/index.html')
 def index():
     posts = Session.query(Post).all()
-    username = current_user.username if current_user.is_authenticated else None
-    return render_template('index.html', posts=posts,
-                           is_authed=current_user.is_authenticated, username=username)
+    return render_template('index.html', posts=posts)
 
 
 @app.route('/new_post.html', methods=("GET", "POST"))
