@@ -5,4 +5,4 @@ project/myapp.db
 project/config.py
 venv
 Web_Blog.iml
-project/.env
+*.env

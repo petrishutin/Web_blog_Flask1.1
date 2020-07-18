@@ -4,9 +4,9 @@
 <header class="container-fluid">
     <div class="navbar-nav bd-navbar-nav flex-row row align-items-center">
         <a href="index.html"><h1 class="col">My Blog</h1></a>
-        <div class="col-4" align="left">{%if username%} You are logged as {{username}} {%endif%}</div>
+        <div class="col-4" align="left">{%if current_user.is_authenticated %} You are logged as {{ current_user.username }} {%endif%}</div>
         <ul class="col-6 row justify-content-end">
-            {% if is_authed%}
+            {% if current_user.is_authenticated %}
             <li class="btn btn-secondary border"><a href="new_post.html">New Post</a></li>
             <li class="btn btn-secondary border"><a href="logout/">Log Out</a></li>
             {% else %}
