@@ -11,13 +11,6 @@ services:
       context: .
     ports:
       - 3000:80
-    volumes:
-      - ./db:/app/db
-    environment:
-      FLASK_APP: main
-#    command:
-#      - dos2unix
-#      - entrypoint.sh
     depends_on:
       - pg
 

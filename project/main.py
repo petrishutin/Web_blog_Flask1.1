@@ -7,10 +7,10 @@ from werkzeug.exceptions import BadRequest, InternalServerError
 
 from models import User, Post
 from models.db import Session
-from config import API_KEY
+from config import SECRET_KEY
 
 app = Flask(__name__)
-app.config['API_KEY'] = API_KEY
+app.config.update(SECRET_KEY=SECRET_KEY)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -56,7 +56,6 @@ def sign_in():
     username, password = get_username_and_password_from_form(request.form)
     validate_username_unique(username)
     user = User(username, password)
-    current_user.name = username
     Session.add(user)
 
     try:
@@ -65,7 +64,6 @@ def sign_in():
         logger.exception("Error creating user!")
         raise InternalServerError(f"Could not create new user! Error: {e}")
     login_user(user)
-    session['username'] = username
     return redirect(url_for("index"))
 
 
@@ -82,17 +80,13 @@ def login():
     if user.password != User.hash_password(password):
         return render_template("login.html", error_text="Invalid username or password!")
     login_user(user)
-    session['username'] = username
-    session['user_id'] = user.get_id()
-    print("Uid:", session['user_id'])
+    print("Uid:", user.id)
     return redirect(url_for("index"))
 
 
 @app.route("/logout/")
 def logout():
     logout_user()
-    session['username'] = None
-    session['user_id'] = None
     return redirect(url_for("index"))
 
 
@@ -100,10 +94,7 @@ def logout():
 @app.route('/index.html')
 def index():
     posts = Session.query(Post).all()
-    if 'username' in session:
-        username = session['username']
-    else:
-        username = None
+    username = current_user.username if current_user.is_authenticated else None
     return render_template('index.html', posts=posts,
                            is_authed=current_user.is_authenticated, username=username)
 
@@ -116,7 +107,7 @@ def new_post():
         return render_template("new_post.html")
     form = request.form
     post_text = form['post_text']
-    post = Post(post_text, session['user_id'])
+    post = Post(post_text, current_user.id)
     Session.add(post)
     try:
         Session.commit()
